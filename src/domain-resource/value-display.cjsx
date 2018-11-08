@@ -50,11 +50,14 @@ class ValueDisplay extends React.Component
 				invalid = true
 			reference = @props.node.binding.reference
 			vs = State.get().valuesets[reference]
-			for [display, code] in vs.items
-				if code is value
-					invalid = false
-					value = display
-					break
+			if vs?
+        for [display, code] in vs.items
+          if code is value
+            invalid = false
+            value = display
+            break
+      else
+        invalid = true
 
 		value = @formatString(value)
 		if invalid
@@ -106,7 +109,7 @@ class ValueDisplay extends React.Component
 			date: @formatDate, time: @formatTime, instant: @formatInstant, dateTime: @formatDateTime
 			integer: @formatInt, unsignedInt: @formatInt, positiveInt: @formatInt, decimal: @formatDecimal
 			boolean: @formatBoolean, string: @formatString, uri: @formatString, oid: @formatString, code: @formatString
-			id: @formatString, markdown: @formatString, xhtml: @formatXhtml, code: @formatCode
+			id: @formatString, markdown: @formatString, xhtml: @formatXhtml
 
 		formatter = formatters[@props.node.fhirType || "string"]
 		value = @props.node.value
