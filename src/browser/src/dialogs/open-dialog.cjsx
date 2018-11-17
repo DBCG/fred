@@ -5,7 +5,7 @@ bsInput = require("react-bootstrap").Input
 {Tabs, Tab}  = require("react-bootstrap")
 
 State = require "../state"
-SchemaUtils = require "../helpers/schema-utils"
+SchemaUtils = require "@smart-fred/editor/lib/helpers/schema-utils"
 
 class OpenDialog extends React.Component
 

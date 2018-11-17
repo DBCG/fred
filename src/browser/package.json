@@ -1,15 +1,14 @@
 {
-  "name": "smart-fred",
-  "version": "0.5.0",
+  "name": "@smart-fred/browser",
+  "version": "0.0.0",
   "description": "",
   "scripts": {
     "dev": "webpack-dev-server --config --devtool eval --progress --colors --inline --content-base ./public",
-    "build-profiles": "./node_modules/.bin/coffee ./scripts/simplify-profiles.coffee",
-    "build": "WEBPACK_ENV=build ./node_modules/.bin/webpack",
-    "test": "./node_modules/.bin/mocha",
-    "test-watch": "./node_modules/.bin/mocha -w",
+    "build": "WEBPACK_ENV=build webpack",
     "deploy-gh": "git subtree push --prefix public origin gh-pages",
-    "reset-gh-pages": "git push origin `git subtree split --prefix output gh-pages`:gh-pages --force"
+    "reset-gh-pages": "git push origin `git subtree split --prefix output gh-pages`:gh-pages --force",
+    "prepare": "yarn run clean && yarn run build",
+    "clean": "rimraf lib && rimraf data"
   },
   "author": "Dan Gottlieb",
   "license": "MIT",
@@ -19,12 +18,12 @@
     "coffee-script": "^1.10.0",
     "json-loader": "^0.5.4",
     "jsx-loader": "^0.13.2",
-    "mocha": "^2.3.3",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.0",
     "webpack-file-changer": "^2.0.1"
   },
   "dependencies": {
+    "@smart-fred/editor": "0.0.0",
     "freezer-js": "^0.8.0",
     "moment": "^2.10.6",
     "node-uuid": "^1.4.7",

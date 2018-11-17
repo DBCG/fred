@@ -1,6 +1,6 @@
 React = require "react"
 State = require "./state"
-SchemaUtils = require "./helpers/schema-utils"
+SchemaUtils = require "@smart-fred/editor/lib/helpers/schema-utils"
 BsNavbar = require("react-bootstrap").Navbar
 {Nav, NavItem} = require("react-bootstrap")
 

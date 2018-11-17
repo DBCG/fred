@@ -2,8 +2,8 @@ React = require "react"
 {Modal,Nav,NavItem} = require("react-bootstrap")
 
 State = require "../state"
-SchemaUtils = require "../helpers/schema-utils"
-BundleUtils = require "../helpers/bundle-utils"
+SchemaUtils = require "@smart-fred/editor/lib/helpers/schema-utils"
+BundleUtils = require "@smart-fred/editor/lib/helpers/bundle-utils"
 
 
 class ExportDialog extends React.Component

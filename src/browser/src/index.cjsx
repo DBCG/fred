@@ -1,7 +1,7 @@
 React    = require "react"
 ReactDOM = require "react-dom"
 State = require "./reactions"
-SchemaUtils = require "./helpers/schema-utils"
+SchemaUtils = require "@smart-fred/editor/lib/helpers/schema-utils"
 
 Navbar = require "./navbar"
 RemoteNavbar = require "./remote-navbar"
@@ -9,7 +9,7 @@ BundleBar = require "./bundle-bar"
 RefWarning = require "./ref-warning"
 Footer = require "./footer"
 
-DomainResource = require "./domain-resource/"
+DomainResource = require "@smart-fred/editor/lib/domain-resource/"
 
 OpenDialog = require "./dialogs/open-dialog"
 ExportDialog = require "./dialogs/export-dialog"

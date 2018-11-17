@@ -5,12 +5,22 @@ fs = require "fs"
 path = require "path"
 
 inputPath = "../fhir_profiles"
-outputPath = "../public/profiles"
+outputPath = "../data"
+
+ensureDirectoryExistence = (filePath) ->
+	if fs.existsSync(filePath) == true
+		return true;
+
+	dirname = path.dirname(filePath)
+	ensureDirectoryExistence(dirname)
+	fs.mkdirSync(filePath)
 
 summarizeDirectory = (inputDirName, inputDirPath, outputDirPath) ->
 	console.log "Processing #{inputDirName}"
 	profiles = {}
 	valuesets = {}
+
+	ensureDirectoryExistence(outputDirPath)
 	
 	for bundleFileName in fs.readdirSync(inputDirPath).sort()
 		continue unless bundleFileName.indexOf("json") > -1

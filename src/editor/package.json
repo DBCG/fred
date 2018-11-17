@@ -1,0 +1,39 @@
+{
+  "name": "@smart-fred/editor",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "build-profiles": "coffee ./scripts/simplify-profiles.coffee",
+    "prepare": "yarn run clean && yarn run build-profiles && yarn run build",
+    "clean": "rimraf lib && rimraf data",
+    "build": "cjsx -cb --output lib/ src/",
+    "test": "mocha",
+    "test-watch": ".mocha -w"
+  },
+  "author": "Dan Gottlieb",
+  "license": "MIT",
+  "files": [
+    "lib",
+    "data",
+    "src"
+  ],
+  "devDependencies": {
+    "rimraf" : "latest",
+    "coffee-script": "^1.10.0",
+    "coffee-react" : "^5.0.1"
+  },
+  "dependencies": {
+    "freezer-js": "^0.8.0",
+    "moment": "^2.10.6",
+    "node-uuid": "^1.4.7",
+    "osh-async-parallel": "0.0.0",
+    "react": "^0.14.0",
+    "react-bootstrap": "^0.28.1",
+    "react-dom": "^0.14.0",
+    "sanitize-caja": "^0.1.3"
+  },
+  "keywords": [
+    "fhir",
+    "smart"
+  ]
+}

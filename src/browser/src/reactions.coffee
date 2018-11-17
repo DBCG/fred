@@ -1,6 +1,6 @@
 State = require "./state"
-SchemaUtils = require "./helpers/schema-utils"
-BundleUtils = require "./helpers/bundle-utils"
+SchemaUtils = require "@smart-fred/editor/lib/helpers/schema-utils"
+BundleUtils = require "@smart-fred/editor/lib/helpers/bundle-utils"
 
 canMoveNode = (node, parent) ->
 	unless parent?.nodeType in ["objectArray", "valueArray"]
