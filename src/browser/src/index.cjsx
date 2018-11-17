@@ -1,6 +1,6 @@
 React    = require "react"
 ReactDOM = require "react-dom"
-State = require "./reactions"
+State = require "@smart-fred/editor/lib/reactions"
 SchemaUtils = require "@smart-fred/editor/lib/helpers/schema-utils"
 
 Navbar = require "./navbar"

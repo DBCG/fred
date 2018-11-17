@@ -1,5 +1,5 @@
 React = require "react"
-State = require "./state"
+State = require "@smart-fred/editor/lib/state"
 
 class RefWarning extends React.Component
 

@@ -1,7 +1,7 @@
 React = require "react"
 {Modal,Nav,NavItem} = require("react-bootstrap")
 
-State = require "../state"
+State = require "@smart-fred/editor/lib/state"
 SchemaUtils = require "@smart-fred/editor/lib/helpers/schema-utils"
 BundleUtils = require "@smart-fred/editor/lib/helpers/bundle-utils"
 

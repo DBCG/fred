@@ -1,5 +1,4 @@
 React = require "react"
-State = require "../state"
 ResourceElement = require "./resource-element"
 ElementMenu = require "./element-menu"
 

@@ -1,5 +1,5 @@
 React = require "react"
-State = require "./state"
+State = require "@smart-fred/editor/lib/state"
 BsNavbar = require("react-bootstrap").Navbar
 {Nav, NavItem} = require("react-bootstrap")
 
