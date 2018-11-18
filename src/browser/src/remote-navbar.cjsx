@@ -1,5 +1,4 @@
 React = require "react"
-State = require "@smart-fred/editor/lib/state"
 SchemaUtils = require "@smart-fred/editor/lib/helpers/schema-utils"
 BsNavbar = require("react-bootstrap").Navbar
 {Nav, NavItem} = require("react-bootstrap")
@@ -15,7 +14,7 @@ class RemoteNavbar extends React.Component
 			
 		window.addEventListener "message", (e) =>
 			if e.data?.action is "edit" and e.data?.resource
-				State.trigger "load_json_resource", e.data.resource
+				@props.freezer.trigger "load_json_resource", e.data.resource
 				@remoteCallback = e.data.callback
 		, false
 
@@ -38,7 +37,7 @@ class RemoteNavbar extends React.Component
 			SchemaUtils.toBundle bundle.resources, bundle.pos, resource 		
 	
 		if errCount > 0
-			State.trigger "set_ui", "validation_error"
+			@props.freezer.trigger "set_ui", "validation_error"
 		else
 			@launcher.postMessage
 				action: "fred-save", resource: resource, 
@@ -57,7 +56,7 @@ class RemoteNavbar extends React.Component
 
 	handleUiChange: (status, e) ->
 		e.preventDefault()
-		State.trigger "set_ui", status
+		@props.freezer.trigger "set_ui", status
 
 	renderButtons: ->
 		return null unless @props.hasResource

@@ -57,6 +57,7 @@ class ValueNode extends React.Component
 					onEditCommit={@props.onEditCommit}
 					onNodeDelete={@props.onNodeDelete}
 					onEditCancel={@props.onEditCancel}
+					freezer={@props.freezer}
 				/>
 			</div>
 			{preview}
@@ -73,6 +74,7 @@ class ValueNode extends React.Component
 				<ValueDisplay 
 					node={@props.node} 
 					parent={@props.parent}
+					freezer={@props.freezer}
 				/>
 			</div>
 		</div>

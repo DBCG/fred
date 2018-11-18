@@ -1,5 +1,4 @@
 React = require "react"
-State = require "@smart-fred/editor/lib/state"
 BsNavbar = require("react-bootstrap").Navbar
 {Nav, NavItem} = require("react-bootstrap")
 
@@ -7,7 +6,7 @@ class Navbar extends React.Component
 
 	handleUiChange: (status, e) ->
 		e.preventDefault()
-		State.trigger "set_ui", status
+		@props.freezer.trigger "set_ui", status
 
 	handleDrag: (e) ->
 		e.preventDefault()
@@ -17,11 +16,11 @@ class Navbar extends React.Component
 		reader.onload = (e) -> 
 			try
 				json = JSON.parse e.target.result
-				State.trigger "load_json_resource", json
+				@props.freezer.trigger "load_json_resource", json
 			catch e
-				State.trigger "set_ui", "load_error"
+				@props.freezer.trigger "set_ui", "load_error"
 
-		State.trigger "set_ui", "loading"
+		@props.freezer.trigger "set_ui", "loading"
 		reader.readAsText(file)
 	
 	renderButtons: ->

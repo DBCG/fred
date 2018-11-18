@@ -1,15 +1,14 @@
 React = require "react"
-State = require "@smart-fred/editor/lib/state"
 
 class RefWarning extends React.Component
 
 	handleUpdate: (e) ->
 		e.preventDefault()
-		State.trigger "update_refs", @props.update
+		@props.freezer.trigger "update_refs", @props.update
 
 	handleCancel: (e) ->
 		e.preventDefault()
-		State.trigger "set_ui", "ready"	
+		@props.freezer.trigger "set_ui", "ready"	
 
 	render: ->
 		countText = if @props.count > 1

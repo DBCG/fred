@@ -1,7 +1,6 @@
 React = require "react"
 moment = require "moment"
 sanitize = require "sanitize-caja"
-State = require "../state"
 
 class ValueDisplay extends React.Component
 

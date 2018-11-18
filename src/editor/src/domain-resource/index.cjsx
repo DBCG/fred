@@ -18,7 +18,7 @@ class DomainResource extends React.Component
 				
 			children.push <ResourceElement 
 				key={child.id} node={child} 
-				parent={node} 
+				parent={node} freezer={@props.freezer}
 			/>
 
 		id = if resourceId
@@ -30,7 +30,7 @@ class DomainResource extends React.Component
 					{node.displayName}
 					{id}
 					&nbsp;
-					<ElementMenu node={node} />
+					<ElementMenu node={node} freezer={@props.freezer} />
 				</h2>
 			</div></div>
 			{children}

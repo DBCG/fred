@@ -1,7 +1,6 @@
 React = require "react"
 {Modal,Nav,NavItem} = require("react-bootstrap")
 
-State = require "@smart-fred/editor/lib/state"
 SchemaUtils = require "@smart-fred/editor/lib/helpers/schema-utils"
 BundleUtils = require "@smart-fred/editor/lib/helpers/bundle-utils"
 
@@ -12,7 +11,7 @@ class ExportDialog extends React.Component
 		nextProps.show isnt @props.show
 
 	handleClose: (e) ->
-		State.trigger "set_ui", "ready"
+		@props.freezer.trigger "set_ui", "ready"
 
 	buildJson: ->
 		[resource, errCount] = SchemaUtils.toFhir @props.resource, true

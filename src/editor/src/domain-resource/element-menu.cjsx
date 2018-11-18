@@ -1,29 +1,28 @@
 React = require "react"
-State = require "../state"
+
 {Dropdown, MenuItem} = require("react-bootstrap")
 
 class ElementMenu extends React.Component
-
 	shouldComponentUpdate: (nextProps) ->
 		nextProps.node?.ui?.menu isnt @props.node?.ui?.menu
 
 	handleToggle: (show) ->
 		if show
-			State.trigger("show_object_menu", @props.node, @props.parent)
+			@props.freezer.trigger("show_object_menu", @props.node, @props.parent)
 
 	handleAddItem: (unused) ->
-		State.trigger("add_object_element", @props.node, unused)
+		@props.freezer.trigger("add_object_element", @props.node, unused)
 
 	handleAddObject: (e) ->
-		State.trigger("add_array_object", @props.node)
+		@props.freezer.trigger("add_array_object", @props.node)
 		e.preventDefault()
 
 	handleMove: (down, e) ->
-		State.trigger("move_array_node", @props.node, @props.parent, down)
+		@props.freezer.trigger("move_array_node", @props.node, @props.parent, down)
 		e.preventDefault
 
 	handleDeleteItem: (e) ->
-		State.trigger("delete_node", @props.node, @props.parent)
+		@props.freezer.trigger("delete_node", @props.node, @props.parent)
 		e.preventDefault()
 
 	preventDefault: (e) ->

@@ -4,7 +4,6 @@ Modal = require("react-bootstrap").Modal
 bsInput = require("react-bootstrap").Input
 {Tabs, Tab}  = require("react-bootstrap")
 
-State = require "@smart-fred/editor/lib/state"
 SchemaUtils = require "@smart-fred/editor/lib/helpers/schema-utils"
 
 class OpenDialog extends React.Component
@@ -52,7 +51,7 @@ class OpenDialog extends React.Component
 
 	handleClose: (e) ->
 		@setState {showSpinner:false}
-		State.trigger "set_ui", "ready"
+		@props.freezer.trigger "set_ui", "ready"
 
 	handleSelectFile: (e) ->
 		@refs.fileReaderInput.click()
@@ -70,9 +69,9 @@ class OpenDialog extends React.Component
 	loadTextResource: (data) ->
 		try
 			json = JSON.parse data
-			State.trigger "load_json_resource", json
+			@props.freezer.trigger "load_json_resource", json
 		catch e
-			State.trigger "set_ui", "load_error"
+			@props.freezer.trigger "set_ui", "load_error"
 
 	handleLoadText: (e) ->
 		@loadTextResource @state.fhirText
@@ -82,7 +81,7 @@ class OpenDialog extends React.Component
 
 	handleLoadUrl: (e) ->
 		return unless @state.fhirUrl.length > 2
-		State.trigger "load_url_resource", @state.fhirUrl
+		@props.freezer.trigger "load_url_resource", @state.fhirUrl
 		e.preventDefault()
 
 	handleUrlChange: (e) ->
@@ -93,7 +92,7 @@ class OpenDialog extends React.Component
 		json = {resourceType: @state.newResourceType}
 		if @state.newResourceBundle
 			json = {resourceType: "Bundle", entry: [{resource: json}]}
-		State.trigger "load_json_resource", json
+		@props.freezer.trigger "load_json_resource", json
 
 	handleNewTypeChange: (e) ->
 		@setState {newResourceType: e.target.value}
@@ -173,7 +172,7 @@ class OpenDialog extends React.Component
 
 	renderNewInput: ->
 		resourceNames = []
-		for k, v of State.get().profiles
+		for k, v of @props.freezer.get().profiles
 			if v[k]?.type?[0]?.code is "DomainResource"
 				resourceNames.push k
 		resourceOptions = []

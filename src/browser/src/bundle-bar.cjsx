@@ -1,5 +1,4 @@
 React = require "react"
-State = require "@smart-fred/editor/lib/state"
 {DropdownButton, MenuItem} = require("react-bootstrap")
 
 class BundleBar extends React.Component
@@ -9,10 +8,10 @@ class BundleBar extends React.Component
 
 	handleNav: (pos, e) ->
 		e.preventDefault()
-		State.trigger "set_bundle_pos", pos
+		@props.freezer.trigger "set_bundle_pos", pos
 
 	handleMenu: (e, item) ->
-		State.trigger item
+		@props.freezer.trigger item
 
 	renderEmptyBundle: ->
 			<div className="alert alert-danger">An error occured loading the resource.</div>

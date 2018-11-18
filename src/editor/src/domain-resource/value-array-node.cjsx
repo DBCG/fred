@@ -1,5 +1,4 @@
 React = require "react"
-State = require "../state"
 ValueDisplay = require "./value-display"
 ValueEditor = require "./value-editor"
 
@@ -11,14 +10,14 @@ class ValueArrayNode extends React.Component
 		nextProps.node isnt @props.node
 
 	handleItemAdd: (e) ->
-		State.trigger("add_array_value", @props.node)
+		@props.freezer.trigger("add_array_value", @props.node)
 		e.preventDefault() if e
 
 	handleItemDelete: (child, e) ->
 		if @props.node.children.length is 1
 			@props.onNodeDelete()
 		else
-			State.trigger("delete_node", child, @props.node)
+			@props.freezer.trigger("delete_node", child, @props.node)
 		e.preventDefault()
 
 	componentWillMount: ->
@@ -44,6 +43,7 @@ class ValueArrayNode extends React.Component
 				onNodeDelete={@handleItemDelete.bind(@, child)}
 				onEditCancel={@props.onEditCancel}
 				required={@props.node.isRequired and @props.node.children.length is 1}
+				freezer={@props.freezer}
 			/>
 
 		required = if @props.node.isRequired then "*"

@@ -1,7 +1,5 @@
 React    = require "react"
 ReactDOM = require "react-dom"
-
-State = require "../state"
 validator = require "../helpers/primitive-validator"
 
 class ValueEditor extends React.Component
@@ -26,7 +24,7 @@ class ValueEditor extends React.Component
 			#remove blank lines
 			if @props.node.value
 				newValue = @props.node.value.replace(/^\s*[\r\n]/gm, "")
-				State.trigger("value_change", @props.node, newValue)
+				@props.freezer.trigger("value_change", @props.node, newValue)
 
 		if @props.node.fhirType is "code" and
 			@props.node?.binding?.strength is "required"
@@ -34,7 +32,7 @@ class ValueEditor extends React.Component
 				reference = @props.node.binding.reference
 				vs = State.get().valuesets[reference]
 				if vs.type is "complete"
-					State.trigger("value_change", @props.node, @refs.inputField.value)
+					@props.freezer.trigger("value_change", @props.node, @refs.inputField.value)
 
 
 	handleChange: (e) ->
@@ -45,7 +43,7 @@ class ValueEditor extends React.Component
 					if resource.id is e.target.value and i isnt State.get().bundle.pos
 						isInvalid = "This id is already used in the bundle."
 
-		State.trigger("value_change", @props.node, e.target.value, isInvalid)
+		@props.freezer.trigger("value_change", @props.node, e.target.value, isInvalid)
 
 	handleKeyDown: (e) ->
 		if e.which is @ESC_KEY

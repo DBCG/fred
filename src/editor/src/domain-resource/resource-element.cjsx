@@ -1,7 +1,6 @@
 React    = require "react"
 ReactDOM = require "react-dom"
 
-State = require "../state"
 validator = require "../helpers/primitive-validator"
 
 ValueEditor = require "./value-editor"
@@ -19,7 +18,7 @@ class ResourceElement extends React.Component
 		for editNode in node.children || [node]
 			return false if node.ui?.validationErr
 			if message = validator.isValid(editNode.fhirType, editNode.value, true)
-				State.trigger("value_change", editNode, editNode.value, message)
+				@props.freezer.trigger("value_change", editNode, editNode.value, message)
 				return false
 
 		return true
@@ -37,32 +36,32 @@ class ResourceElement extends React.Component
 				window.scroll(0, scrollY - 60)
 
 	handleEditStart: (e) ->
-		State.trigger("start_edit", @props.node)
+		@props.freezer.trigger("start_edit", @props.node)
 		e.preventDefault() if e
 
 	handleEditCancel: (e) ->
 		#don't allow cancel if no previous value
 		if @props.node?.ui?.prevState?.value in [null, undefined, ""]
 			return
-		State.trigger("cancel_edit", @props.node)
+		@props.freezer.trigger("cancel_edit", @props.node)
 		e.preventDefault() if e
 
 	handleEditCommit:  (e) ->
 		return unless @isValid(@props.node)
-		State.trigger("end_edit", @props.node, @props.parent)
+		@props.freezer.trigger("end_edit", @props.node, @props.parent)
 		e.preventDefault() if e
 
 	handleNodeDelete: (e) ->
-		State.trigger("delete_node", @props.node, @props.parent)
+		@props.freezer.trigger("delete_node", @props.node, @props.parent)
 		e.preventDefault() if e
 
 	handleAddContained: (e) ->
-		State.trigger("show_open_contained", @props.node)
+		@props.freezer.trigger("show_open_contained", @props.node)
 		e.preventDefault() if e
 
 	handleObjectMenu: (e) ->
 		return if @props.node?.ui?.status is "menu"
-		State.trigger("show_object_menu", @props.node, @props.parent)
+		@props.freezer.trigger("show_object_menu", @props.node, @props.parent)
 		e.preventDefault() if e
 
 	renderChildren: ->
@@ -70,7 +69,7 @@ class ResourceElement extends React.Component
 		for child in @props.node.children
 			children.push <ResourceElement 
 				key={child.id} node={child} 
-				parent={@props.node}
+				parent={@props.node} freezer={@props.freezer}
 			/>		
 		return children
 
@@ -85,6 +84,7 @@ class ResourceElement extends React.Component
 					onEditCommit={@handleEditCommit.bind(@)}
 					onEditCancel={@handleEditCancel.bind(@)}
 					onNodeDelete={@handleNodeDelete.bind(@)}
+					freezer={@props.freezer}
 				/>
 
 
@@ -97,6 +97,7 @@ class ResourceElement extends React.Component
 					onEditCommit={@handleEditCommit.bind(@)}
 					onEditCancel={@handleEditCancel.bind(@)}
 					onNodeDelete={@handleNodeDelete.bind(@)}
+					freezer={@props.freezer}
 				/>
 
 		else if @props.node.nodeType is "objectArray"
@@ -112,7 +113,7 @@ class ResourceElement extends React.Component
 
 				<div className="fhir-array-complex-wrap" ref="complexElement">
 					<ElementMenu node={@props.node} 
-						parent={@props.parent} display="heading" />
+						parent={@props.parent} freezer={@props.freezer} display="heading" />
 					<div className="fhir-array-complex text-center">
 						<button className="btn btn-primary" onClick={@handleAddContained.bind(@)}>
 							Choose Resource
@@ -125,7 +126,7 @@ class ResourceElement extends React.Component
 
 				<div className="fhir-array-complex-wrap" ref="complexElement">
 					<ElementMenu node={@props.node} 
-						parent={@props.parent} display="heading" />
+						parent={@props.parent} freezer={@props.freezer} display="heading" />
 					<div className="fhir-array-complex">
 						{@renderChildren()}
 					</div>
@@ -136,7 +137,7 @@ class ResourceElement extends React.Component
 			<div className="fhir-data-element row" ref="complexElement">
 				<div className="col-sm-3">
 					<ElementMenu node={@props.node} 
-						parent={@props.parent} display="inline" 
+						parent={@props.parent} freezer={@props.freezer} display="inline" 
 					/>
 				</div>
 				<div className="col-sm-9">

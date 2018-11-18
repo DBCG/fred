@@ -1,6 +1,8 @@
 React    = require "react"
 ReactDOM = require "react-dom"
-State = require "@smart-fred/editor/lib/reactions"
+
+createFreezer = require "@smart-fred/editor/lib/state"
+
 SchemaUtils = require "@smart-fred/editor/lib/helpers/schema-utils"
 
 Navbar = require "./navbar"
@@ -40,23 +42,23 @@ class RootComponent extends React.Component
 
 		unless qs.warn is "0"
 			window.onbeforeunload = =>
-				if State.get().resource
+				if @props.freezer.get().resource
 					"If you leave this page you will lose any unsaved changes."
 
 		defaultProfilePath = "./profiles/dstu2.json"
 
-		State.trigger "load_initial_json", 
+		@props.freezer.trigger "load_initial_json", 
 			qs.profiles || defaultProfilePath,
 			qs.resource, @isRemote
 
 	componentDidMount: ->
-		State.on "update", => @forceUpdate()
+		@props.freezer.on "update", => @forceUpdate()
 
 	handleOpen: ->
-		State.trigger("set_ui", "open")
+		@props.freezer.trigger("set_ui", "open")
 
 	render: ->
-		state = State.get()
+		state = @props.freezer.get()
 
 		if state.bundle
 			bundleBar = <BundleBar bundle={state.bundle} />
@@ -64,7 +66,7 @@ class RootComponent extends React.Component
 		resourceContent = if state.ui.status is "loading"
 			<div className="spinner"><img src="./img/ajax-loader.gif" /></div>
 		else if state.resource
-			<DomainResource node={state.resource} />
+			<DomainResource node={state.resource} freezer={@props.freezer} />
 		else if !state.bundle and state.ui.status.indexOf("error") is -1
 			<div className="row" style={marginTop: "60px", marginBottom: "60px"}><div className="col-xs-offset-4 col-xs-4">
 				<button className="btn btn-primary btn-block" onClick={@handleOpen.bind(@)}>
@@ -80,16 +82,17 @@ class RootComponent extends React.Component
 			<div className="alert alert-danger">Please fix errors in resource before continuing.</div>
 
 		actionWarning = if state.ui.status is "ref_warning"
-			<RefWarning count={state.ui.count}, update={state.ui.update} />
+			<RefWarning count={state.ui.count}, update={state.ui.update} freezer={@props.freezer} />
 
 		navBar = if @isRemote
 			<RemoteNavbar 
 				hasResource={if state.resource then true}
 				appVersion={@appVersion} 
 				hasProfiles={state.profiles isnt null}
+				freezer={@props.freezer}
 			/>
 		else
-			<Navbar hasResource={if state.resource then true} appVersion={@appVersion} />
+			<Navbar hasResource={if state.resource then true} appVersion={@appVersion} freezer={@props.freezer} />
 
 		<div>
 			{navBar}
@@ -100,12 +103,14 @@ class RootComponent extends React.Component
 				{resourceContent}
 				<Footer />
 			</div>
-			<OpenDialog show={state.ui.status is "open"} openMode={state.ui.openMode} />
+			<OpenDialog show={state.ui.status is "open"} openMode={state.ui.openMode} freezer={@props.freezer} />
 			<ExportDialog show={state.ui.status is "export"}
 				bundle={state.bundle}
 				resource={state.resource}
+				freezer={@props.freezer}
 			/>
 		</div>
 
+freezer = createFreezer();
 
-ReactDOM.render <RootComponent />, document.getElementById("content")
+ReactDOM.render <RootComponent freezer={freezer} />, document.getElementById("content")
