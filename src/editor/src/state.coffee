@@ -2,6 +2,8 @@ Freezer = require "freezer-js"
 SchemaUtils = require "@smart-fred/editor/lib/helpers/schema-utils"
 BundleUtils = require "@smart-fred/editor/lib/helpers/bundle-utils"
 
+$ = require("jquery");
+
 createFreezer = () ->
     freezer = new Freezer
         ui: 

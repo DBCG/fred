@@ -1,3 +1,5 @@
+require 'bootstrap'
+
 React = require "react"
 ResourceElement = require "./resource-element"
 ElementMenu = require "./element-menu"
